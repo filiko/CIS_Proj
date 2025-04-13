@@ -138,9 +138,9 @@ INSERT INTO SPECIALTY (specialty_name, specialty_notes) VALUES
 ('General Surgery', 'Surgical procedures specialist');
 
 -- DOCTOR data
-INSERT INTO DOCTOR (first_name, last_name, phone_number, department_id, specialty_id) VALUES
-('John', 'Doe', '987-654-3210', 1, 1),
-('Jane', 'Brown', '876-543-2109', 2, 2),
+INSERT INTO DOCTOR (doctor_id,first_name, last_name, phone_number, department_id, specialty_id) VALUES
+(100,'John', 'Doe', '987-654-3210', 1, 1),
+(200,'Jane', 'Brown', '876-543-2109', 2, 2),
 ('Michael', 'Johnson', '765-432-1098', 3, 3),
 ('Sarah', 'Davis', '654-321-0987', 4, 4),
 ('Robert', 'Miller', '543-210-9876', 5, 5),
@@ -177,22 +177,9 @@ INSERT INTO DOCTOR_SPECIALTY (doctor_id, specialty_id) VALUES
 (15, 5);
 
 -- NURSE data
-INSERT INTO NURSE (first_name, last_name, phone_number, department_id) VALUES
-('Nina', 'Taylor', '555-000-1111', 1),
-('Mike', 'Anderson', '555-000-2222', 2),
-('Susan', 'Rodriguez', '555-000-3333', 3),
-('Thomas', 'Lopez', '555-000-4444', 4),
-('Rebecca', 'Lee', '555-000-5555', 5),
-('Alex', 'Gonzalez', '555-000-6666', 6),
-('Laura', 'Nelson', '555-000-7777', 7),
-('Eric', 'Hill', '555-000-8888', 8),
-('Patricia', 'Baker', '555-000-9999', 9),
-('George', 'Rivera', '555-111-0000', 10),
-('Linda', 'Mitchell', '555-111-1111', 11),
-('Steven', 'Carter', '555-111-2222', 12),
-('Karen', 'Roberts', '555-111-3333', 13),
-('Edward', 'Turner', '555-111-4444', 14),
-('Michelle', 'Phillips', '555-111-5555', 15);
+INSERT INTO NURSE (nurse_id, first_name, last_name, phone_number, department_id) VALUES
+(100, 'Nina', 'Taylor', '555-000-1111', 1),
+(200, 'Mike', 'Anderson', '555-000-2222', 2);
 
 -- DOCTOR_NURSE data
 INSERT INTO DOCTOR_NURSE (doctor_id, nurse_id) VALUES
@@ -610,23 +597,6 @@ INSERT INTO ALLERGIC_REACTION (patient_id, medication_id, reaction_date, symptom
 
 -- APPOINTMENT data
 INSERT INTO APPOINTMENT (patient_id, doctor_id, nurse_id, prescription_id, surgery_id, appointment_date, reason, appointment_status, doctor_notes, nurse_notes) VALUES
-(1, 1, 1, 1, NULL, '2025-01-05 09:00:00', 'Heart condition checkup', 'completed', 'Patient shows improvement with medication', 'Vital signs normal'),
-(2, 2, 2, 3, NULL, '2025-01-10 10:30:00', 'Diabetes follow-up', 'completed', 'Blood sugar levels stable', 'Patient following diet plan'),
-(3, 3, 3, 4, NULL, '2025-01-15 11:00:00', 'Asthma management', 'completed', 'Breathing improved with current medication', 'Lung sounds clear'),
-(4, 4, 4, NULL, 4, '2025-01-20 14:00:00', 'Knee pain', 'completed', 'Scheduled for knee replacement', 'Mobility severely limited'),
-(5, 5, 5, 5, 5, '2025-01-25 15:30:00', 'Oncology follow-up', 'completed', 'Tumor responding to treatment', 'Patient handling side effects well'),
-(6, 6, 6, 6, NULL, '2025-02-01 09:30:00', 'Depression check', 'completed', 'Medication dosage adjusted', 'Patient reports improved mood'),
-(7, 7, 7, 7, 7, '2025-02-05 10:00:00', 'Anxiety management', 'completed', 'Current medication working well', 'Vital signs normal'),
-(8, 8, 8, 8, NULL, '2025-02-10 11:30:00', 'Thyroid check', 'completed', 'Levels within normal range', 'Weight stable'),
-(9, 9, 9, NULL, NULL, '2025-02-15 13:00:00', 'COPD management', 'completed', 'Breathing exercises recommended', 'Oxygen levels improved'),
-(10, 10, 10, 10, 10, '2025-02-20 14:30:00', 'Back pain', 'completed', 'Scheduled for spinal fusion', 'Pain level 8/10'),
-(11, 1, 11, 11, NULL, '2025-02-25 09:00:00', 'Heart follow-up', 'completed', 'EKG shows improvement', 'Blood pressure normalized'),
-(12, 2, 12, 12, 12, '2025-03-01 10:30:00', 'Breast mass', 'completed', 'Scheduled for mastectomy', 'Biopsy results reviewed'),
-(13, 3, 13, 13, 13, '2025-03-05 11:00:00', 'Hernia consultation', 'completed', 'Scheduled for repair surgery', 'Hernia examined'),
-(14, 4, 14, 14, 14, '2025-03-10 14:00:00', 'Knee injury', 'completed', 'Scheduled for arthroscopy', 'Swelling and limited mobility'),
-(15, 5, 15, 15, 15, '2025-03-15 15:30:00', 'Abdominal pain', 'completed', 'Suspected appendicitis', 'Pain in right lower quadrant'),
-(1, 2, 1, NULL, NULL, '2025-03-20 09:30:00', 'Secondary opinion', 'booked', NULL, NULL),
-(2, 1, 2, NULL, NULL, '2025-03-25 10:00:00', 'Cardiac risk assessment', 'booked', NULL, NULL),
-(3, 4, 3, NULL, NULL, '2025-03-30 11:30:00', 'Neurological symptoms', 'booked', NULL, NULL),
-(4, 3, 4, NULL, NULL, '2025-04-05 13:00:00', 'Respiratory check', 'booked', NULL, NULL),
-(5, 6, 5, NULL, NULL, '2025-04-10 14:30:00', 'Pain management', 'booked', NULL, NULL);
+(1, 1, 100, 1, NULL, '2025-01-05 09:00:00', 'Heart condition checkup', 'completed', 'Patient shows improvement with medication', 'Vital signs normal'),
+(2, 2, 200, 3, NULL, '2025-01-10 10:30:00', 'Diabetes follow-up', 'completed', 'Blood sugar levels stable', 'Patient following diet plan'),
+(15, 5, 15, 15, 15, '2025-03-15 15:30:00', 'Abdominal pain', 'completed', 'Suspected appendicitis', 'Pain in right lower quadrant');

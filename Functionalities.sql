@@ -4,7 +4,7 @@
 -- 1. Patient-Doctor Relationship
 -- ● Question: List all patients who have had appointments with more than one doctor in the past month.
 -- Show patient's name, doctor names, and the number of appointments
-
+-- No Data Appears 
 SELECT 
     p.first_name AS patient_first_name,
     p.last_name AS patient_last_name,
@@ -27,7 +27,7 @@ HAVING
 -- 2. Equipment Utilization
 -- ● Question: Identify the equipment that has been used in more than five surgeries this year.
 -- Show the equipment name and the number of times it has been used.
-
+-- CURRENTLY FULLY FUNCTIONAL !CHANGE
 SELECT 
     e.equipment_name,
     COUNT(se.surgery_id) AS times_used
@@ -46,7 +46,7 @@ HAVING
 
 -- 3. Insurance Coverage
 -- Question: Find all patients who have an insurance policy but have made out-of-pocket payments exceeding $500 in the last year.
-
+-- Likely Functional
 SELECT 
     p.first_name,
     p.last_name,
@@ -73,6 +73,7 @@ HAVING
 
 -- 4. Telehealth Analysis
 -- List doctors with more than 10 telehealth sessions but less than 4-star average in patient feedback
+-- No Data 
 
 SELECT 
     d.first_name,
@@ -93,6 +94,7 @@ HAVING
 
 -- 5. Inventory Reorder
 -- Identify medications with less than 10 units in inventory not in pending orders
+-- No Data
 
 SELECT 
     m.medication_name,
@@ -110,7 +112,7 @@ WHERE
 
 -- 6. Multi-Branch Doctors
 -- List doctors who worked in more than one hospital branch in past six months with branch names
-
+-- No data 
 SELECT 
     d.first_name,
     d.last_name,
@@ -132,7 +134,7 @@ HAVING
 
 -- 7. Patient Medical History
 -- Question: Retrieve the medical history of patients who have had allergic reactions to medications prescribed in the hospital.
-
+-- Likely Functional
 SELECT 
     p.first_name,
     p.last_name,
@@ -159,7 +161,8 @@ WHERE
 -- 8. Billing Discrepancies
 -- Question: Find all instances where the billed amount for a patient differs from the sum of the prices of services they have received.
 -- Show the patient name, billed amount, and calculated sum.
-
+-- Error
+-- Have total amount from bill but not able to find total price of service rn
 SELECT 
     p.first_name,
     p.last_name,
@@ -181,7 +184,7 @@ HAVING
 
 -- 9. Staff Workload
 -- List nurses who have assisted in surgeries and have worked more than 40 hours in the past week.
-
+-- Empty 
 SELECT 
     n.first_name,
     n.last_name,
@@ -203,7 +206,7 @@ HAVING
 -- 10. Lab Test Specialization
 -- Identify lab technicians who have performed more than 10 specialized lab tests (e.g., MRI, blood culture) in the past month.
 -- Show the technician's name, the number of specialized tests completed.
-
+-- 
 SELECT 
     lt.first_name,
     lt.last_name,
@@ -212,8 +215,8 @@ FROM
     LAB_TECHNICIAN lt
 JOIN 
     LAB l ON lt.technician_id = l.technician_id
-JOIN 
-    TEST t ON l.test_id = t.test_id
+JOIN -- LAB Table has an equipment field that references TEST
+    TEST t ON l.equipment = t.test_id  
 WHERE 
     l.lab_test_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)
     AND t.is_specialized = TRUE
