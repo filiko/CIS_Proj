@@ -227,7 +227,7 @@ HAVING
 
 -- 11. Patient Follow-Up
 -- List patients who have had surgeries in the past month but have no future appointments scheduled for follow-up.
-
+-- FUNTIONAL !CHANGE (Prob)
 SELECT 
     p.first_name,
     p.last_name,
@@ -249,19 +249,22 @@ WHERE
 -- 12. Patient Visit Frequency
 -- Identify all patients who have visited the hospital more than five times in the past six months.
 -- Show the patient's name, the number of visits, and the department most frequently visited.
-
+-- Sample Data
 SELECT 
     p.first_name,
     p.last_name,
     COUNT(a.appointment_id) AS visit_count,
-    (SELECT d.department_name 
-     FROM DEPARTMENT d
-     JOIN APPOINTMENT a2 ON a2.department_id = d.department_id
-     WHERE a2.patient_id = p.patient_id
-     AND a2.appointment_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
-     GROUP BY d.department_id
-     ORDER BY COUNT(a2.appointment_id) DESC
-     LIMIT 1) AS most_visited_department
+    (
+        SELECT dept.department_name 
+        FROM DEPARTMENT dept
+        JOIN DOCTOR d ON d.department_id = dept.department_id
+        JOIN APPOINTMENT a2 ON a2.doctor_id = d.doctor_id
+        WHERE a2.patient_id = p.patient_id
+        AND a2.appointment_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
+        GROUP BY dept.department_id
+        ORDER BY COUNT(a2.appointment_id) DESC
+        LIMIT 1
+    ) AS most_visited_department
 FROM 
     PATIENT p
 JOIN 
