@@ -83,7 +83,8 @@ HAVING
 
 -- 4. Telehealth Analysis
 -- List doctors with more than 10 telehealth sessions but less than 4-star average in patient feedback
--- No Data 
+-- Currently Functional
+-- Check / Add more sample data
 
 SELECT 
     d.first_name,
@@ -105,6 +106,7 @@ HAVING
 -- 5. Inventory Reorder
 -- Identify medications with less than 10 units in inventory not in pending orders
 -- No Data
+-- NEED TO FINISH
 
 SELECT 
     m.medication_name,
@@ -122,7 +124,8 @@ WHERE
 
 -- 6. Multi-Branch Doctors
 -- List doctors who worked in more than one hospital branch in past six months with branch names
--- No data 
+-- Functional
+-- Fix Data: Need to check doctors with only one branch
 SELECT 
     d.first_name,
     d.last_name,
@@ -144,7 +147,9 @@ HAVING
 
 -- 7. Patient Medical History
 -- Question: Retrieve the medical history of patients who have had allergic reactions to medications prescribed in the hospital.
--- Likely Functional
+-- FUnctional - Need Fix
+-- Duplicates result
+-- Data - Check patients without reaction
 SELECT 
     p.first_name,
     p.last_name,
@@ -171,73 +176,89 @@ WHERE
 -- 8. Billing Discrepancies
 -- Question: Find all instances where the billed amount for a patient differs from the sum of the prices of services they have received.
 -- Show the patient name, billed amount, and calculated sum.
--- Error
--- Have total amount from bill but not able to find total price of service rn
+-- Possibly Functional
+-- Fix Data: More patients with this setup
 SELECT 
     p.first_name,
     p.last_name,
+    b.bill_id,
     b.total_bill AS billed_amount,
-    COALESCE(SUM(s.service_price), 0) AS calculated_sum,
-    (b.total_bill - COALESCE(SUM(s.service_price), 0)) AS discrepancy
+    SUM(s.price * sb.quantity) AS calculated_total
 FROM 
     BILL b
 JOIN 
     PATIENT p ON b.patient_id = p.patient_id
-LEFT JOIN 
-    APPOINTMENT a ON p.patient_id = a.patient_id
-LEFT JOIN 
-    SERVICE s ON a.appointment_id = s.appointment_id
+JOIN 
+    SERVICE_BILL sb ON b.bill_id = sb.bill_id
+JOIN 
+    SERVICE s ON sb.service_id = s.service_id
 GROUP BY 
-    b.bill_id, p.patient_id, b.total_bill
+    b.bill_id, p.first_name, p.last_name, b.total_bill
 HAVING 
-    ABS(discrepancy) > 0.01;  -- Use small threshold to account for floating point errors
+    billed_amount <> calculated_total;
+ 
 
 -- 9. Staff Workload
 -- List nurses who have assisted in surgeries and have worked more than 40 hours in the past week.
--- Empty 
-SELECT 
-    n.first_name,
-    n.last_name,
-    COUNT(DISTINCT s.surgery_id) AS surgeries_assisted,
-    SUM(TIMESTAMPDIFF(HOUR, s.start_time, s.end_time)) AS total_hours_worked
-FROM 
-    NURSE n
-JOIN 
-    TELEHEALTH_SESSION ts ON n.nurse_id = ts.nurse_id
-JOIN 
-    SURGERY s ON ts.surgery_id = s.surgery_id
-WHERE 
-    s.surgery_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 WEEK)
-GROUP BY 
-    n.nurse_id
-HAVING 
-    SUM(TIMESTAMPDIFF(HOUR, s.start_time, s.end_time)) > 40;
+-- Appears to be functional
+-- Check result: We may want to get rid of surgery ID and just say appeared in surgery Y N
+SELECT DISTINCT 
+    NURSE.nurse_id,  -- selects the unique nurse_id
+    NURSE.first_name,  -- selects the nurse's first name
+    NURSE.last_name,   -- selects the nurse's last name
+    NURSE_ASSIGNMENT.surgery_id,  -- selects the surgery_id the nurse was assigned to
+    SUM(NURSE_WORKLOG.hours) AS total_hours_worked  -- sums the total hours worked by the nurse
+
+FROM NURSE_ASSIGNMENT  -- starts from the NURSE_ASSIGNMENT table (records of nurse-surgery assignments)
+
+JOIN NURSE  -- joins the NURSE table to get nurse details
+    ON NURSE_ASSIGNMENT.nurse_id = NURSE.nurse_id  -- matches nurse_id between NURSE_ASSIGNMENT and NURSE
+
+JOIN NURSE_WORKLOG  -- joins the NURSE_WORKLOG table to get work hours
+    ON NURSE.nurse_id = NURSE_WORKLOG.nurse_id  -- matches nurse_id between NURSE and NURSE_WORKLOG
+
+WHERE NURSE_ASSIGNMENT.surgery_id IS NOT NULL  -- filters to include only nurses that were assigned to surgeries
+
+    -- filters work logs to only include the last 7 days
+    AND NURSE_WORKLOG.log_date >= (
+        SELECT MAX(log_date) - INTERVAL 7 DAY FROM NURSE_WORKLOG
+    )
+    AND NURSE_WORKLOG.log_date <= (
+        SELECT MAX(log_date) FROM NURSE_WORKLOG
+    )
+
+GROUP BY NURSE.nurse_id, NURSE_ASSIGNMENT.surgery_id  -- groups the results by nurse and surgery assignment
+
+HAVING SUM(NURSE_WORKLOG.hours) >= 40;  -- includes only nurses who worked 40 or more hours in the last 7 available days
+
 
 -- 10. Lab Test Specialization
 -- Identify lab technicians who have performed more than 10 specialized lab tests (e.g., MRI, blood culture) in the past month.
--- Show the technician's name, the number of specialized tests completed.
--- 
+-- Likely Functional
+-- Fix Data: More case examples
 SELECT 
+    lt.technician_id,
     lt.first_name,
     lt.last_name,
-    COUNT(l.lab_id) AS specialized_tests_completed
+    COUNT(*) AS specialized_test_count
 FROM 
-    LAB_TECHNICIAN lt
+    LAB l
 JOIN 
-    LAB l ON lt.technician_id = l.technician_id
-JOIN -- LAB Table has an equipment field that references TEST
-    TEST t ON l.equipment = t.test_id  
+    TEST t ON l.test_id = t.test_id
+JOIN 
+    LAB_TECHNICIAN lt ON l.technician_id = lt.technician_id
 WHERE 
-    l.lab_test_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)
-    AND t.is_specialized = TRUE
+    t.is_specialized = TRUE
+    AND l.lab_test_date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
 GROUP BY 
-    lt.technician_id
+    lt.technician_id, lt.first_name, lt.last_name
 HAVING 
-    COUNT(l.lab_id) > 10;
+    COUNT(*) > 10;
 
 -- 11. Patient Follow-Up
 -- List patients who have had surgeries in the past month but have no future appointments scheduled for follow-up.
--- FUNTIONAL !CHANGE (Prob)
+-- Functional
+-- Fix Data: check bc only 2 cases rn
 SELECT 
     p.first_name,
     p.last_name,
@@ -259,7 +280,8 @@ WHERE
 -- 12. Patient Visit Frequency
 -- Identify all patients who have visited the hospital more than five times in the past six months.
 -- Show the patient's name, the number of visits, and the department most frequently visited.
--- Sample Data
+-- FIX
+-- No Data 
 SELECT 
     p.first_name,
     p.last_name,
