@@ -1,6 +1,369 @@
+-- Sample data for Healthcare Management System
 
+-- STATE data
+INSERT INTO STATE (state_name) VALUES
+('California'),
+('New York'),
+('Texas'),
+('Florida'),
+('Illinois');
+
+-- CITY data
+INSERT INTO CITY (city_name) VALUES
+('Los Angeles'),
+('San Francisco'),
+('New York City'),
+('Austin'),
+('Miami'),
+('Chicago'),
+('Houston'),
+('Orlando'),
+('Sacramento'),
+('Brooklyn');
+
+-- SUPPLIER data
+INSERT INTO SUPPLIER (supplier_name, phone_number, street, city, state, zipcode, product_discription, email) VALUES
+('MedSupply Inc', '800-123-4567', '100 Commerce St', 'Los Angeles', 'CA', 90001, 'Medical equipment and supplies', 'info@medsupply.com'),
+('PharmaCorp', '800-234-5678', '200 Business Ave', 'San Francisco', 'CA', 94107, 'Pharmaceutical products', 'contact@pharmacorp.com'),
+('MedTech Solutions', '800-345-6789', '300 Technology Blvd', 'New York City', 'NY', 10022, 'Advanced medical technology', 'sales@medtechsolutions.com'),
+('Healthcare Distributors', '800-456-7890', '400 Distribution Dr', 'Austin', 'TX', 78701, 'Healthcare product distribution', 'service@healthcaredist.com'),
+('Surgical Innovations', '800-567-8901', '500 Surgical St', 'Miami', 'FL', 33101, 'Surgical equipment and instruments', 'info@surgicalinnovations.com'),
+('Med Laboratories', '800-678-9012', '600 Laboratory Ln', 'Chicago', 'IL', 60601, 'Laboratory equipment and supplies', 'contact@medlabs.com'),
+('Diagnostic Systems', '800-789-0123', '700 Diagnostic Dr', 'Houston', 'TX', 77002, 'Diagnostic equipment', 'info@diagnosticsystems.com'),
+('BioMed Suppliers', '800-890-1234', '800 BioMed Blvd', 'Orlando', 'FL', 32801, 'Biomedical supplies', 'sales@biomedsuppliers.com'),
+('Health Equipment Co', '800-901-2345', '900 Health St', 'Sacramento', 'CA', 95814, 'General health equipment', 'contact@healthequipment.com'),
+('Medical Innovations', '800-012-3456', '1000 Innovation Ave', 'Brooklyn', 'NY', 11201, 'Innovative medical products', 'info@medicalinnovations.com');
+
+-- INVENTORY data
+INSERT INTO INVENTORY (item_id, supplier_id, item_name, item_type, notes, amount_in_inventory) VALUES
+(21, 2, 'Ciprofloxacin', 'Medication', 'Broad-spectrum antibiotic', 8),
+(22, 3, 'Prednisone', 'Medication', 'Anti-inflammatory steroid', 6),
+(23, 2, 'Losartan', 'Medication', 'Blood pressure medication', 5),
+(24, 2, 'Amlodipine', 'Medication', 'Blood pressure medication', 9),
+(25, 3, 'Duloxetine', 'Medication', 'Antidepressant medication', 7);
+
+
+-- HOSPITAL_BRANCH data
+INSERT INTO HOSPITAL_BRANCH (branch_name, phone_number, branch_street, city_id, state_id, branch_zipcode) VALUES
+('Central Hospital', '123-456-7890', '123 Main St', 1, 1, 90001),
+('East Side Clinic', '234-567-8901', '456 Oak St', 2, 1, 94107),
+('Manhattan Medical Center', '345-678-9012', '789 Park Ave', 3, 2, 10022),
+('Texas Health Center', '456-789-0123', '321 Longhorn Dr', 4, 3, 78701),
+('Sunshine Medical Plaza', '567-890-1234', '555 Beach Blvd', 5, 4, 33101),
+('Windy City Hospital', '678-901-2345', '888 Michigan Ave', 6, 5, 60601),
+('Gulf Coast Medical Center', '789-012-3456', '777 Oil St', 7, 3, 77002),
+('Orange County Health', '890-123-4567', '444 Disney Ln', 8, 4, 32801),
+('Golden State Medical', '901-234-5678', '333 Capitol Ave', 9, 1, 95814),
+('Brooklyn Heights Healthcare', '012-345-6789', '222 Bridge St', 10, 2, 11201);
+
+-- DEPARTMENT data
+INSERT INTO DEPARTMENT (department_name, branch_id) VALUES
+('Cardiology', 1),
+('Pediatrics', 1),
+('Emergency', 2),
+('Neurology', 2),
+('Oncology', 3),
+('Orthopedics', 3),
+('Dermatology', 4),
+('Radiology', 5),
+('Internal Medicine', 6),
+('Surgery', 7),
+('Obstetrics & Gynecology', 8),
+('Psychiatry', 9),
+('Urology', 10),
+('Ophthalmology', 1),
+('Endocrinology', 2);
+
+-- PATIENT data
+INSERT INTO PATIENT (first_name, last_name, date_of_birth, gender, phone_number, street, zipcode, city_id, state_id) VALUES
+('Alice', 'Smith', '1990-04-05', 'Female', '321-654-0987', '789 Pine St', 90001, 1, 1),
+('Bob', 'Jones', '1985-11-23', 'Male', '654-321-9870', '234 Elm St', 94107, 2, 1),
+('Carol', 'Williams', '1978-07-15', 'Female', '555-123-4567', '101 Maple Ave', 10022, 3, 2),
+('David', 'Brown', '1995-02-28', 'Male', '111-222-3333', '505 Cedar Ln', 78701, 4, 3),
+('Emma', 'Taylor', '1982-09-17', 'Female', '444-555-6666', '202 Oak Dr', 33101, 5, 4),
+('Frank', 'Martinez', '1970-12-10', 'Male', '777-888-9999', '303 Birch Rd', 60601, 6, 5),
+('Grace', 'Anderson', '1998-06-22', 'Female', '123-456-7890', '404 Spruce St', 77002, 7, 3),
+('Henry', 'Thomas', '1965-03-30', 'Male', '987-654-3210', '606 Walnut Ave', 32801, 8, 4),
+('Isabella', 'Garcia', '1988-08-11', 'Female', '456-789-0123', '707 Pine Dr', 95814, 9, 1),
+('James', 'Rodriguez', '1992-01-25', 'Male', '333-222-1111', '808 Redwood Ct', 11201, 10, 2),
+('Kimberly', 'Lee', '1975-05-18', 'Female', '789-456-1230', '909 Aspen Ln', 90001, 1, 1),
+('Lawrence', 'Walker', '2000-10-07', 'Male', '456-123-7890', '111 Sequoia St', 94107, 2, 1),
+('Maria', 'Hernandez', '1980-07-29', 'Female', '222-333-4444', '222 Palm Dr', 10022, 3, 2),
+('Nathan', 'Clark', '1973-04-14', 'Male', '888-777-6666', '333 Cypress Rd', 78701, 4, 3),
+('Olivia', 'Lewis', '1993-11-02', 'Female', '555-444-3333', '444 Willow Ln', 33101, 5, 4);
+
+-- EMERGENCY_CONTACT data
+INSERT INTO EMERGENCY_CONTACT (first_name, last_name, relationship, phone_number, email) VALUES
+('John', 'Smith', 'Spouse', '321-654-0988', 'john.smith@email.com'),
+('Mary', 'Jones', 'Spouse', '654-321-9871', 'mary.jones@email.com'),
+('Thomas', 'Williams', 'Son', '555-123-4568', 'thomas.williams@email.com'),
+('Sarah', 'Brown', 'Daughter', '111-222-3334', 'sarah.brown@email.com'),
+('Robert', 'Taylor', 'Spouse', '444-555-6667', 'robert.taylor@email.com'),
+('Linda', 'Martinez', 'Spouse', '777-888-9990', 'linda.martinez@email.com'),
+('Michael', 'Anderson', 'Brother', '123-456-7891', 'michael.anderson@email.com'),
+('Susan', 'Thomas', 'Daughter', '987-654-3211', 'susan.thomas@email.com'),
+('Carlos', 'Garcia', 'Son', '456-789-0124', 'carlos.garcia@email.com'),
+('Emily', 'Rodriguez', 'Spouse', '333-222-1112', 'emily.rodriguez@email.com'),
+('David', 'Lee', 'Brother', '789-456-1231', 'david.lee@email.com'),
+('Jennifer', 'Walker', 'Mother', '456-123-7891', 'jennifer.walker@email.com'),
+('Jose', 'Hernandez', 'Father', '222-333-4445', 'jose.hernandez@email.com'),
+('Lisa', 'Clark', 'Spouse', '888-777-6667', 'lisa.clark@email.com'),
+('William', 'Lewis', 'Spouse', '555-444-3334', 'william.lewis@email.com');
+
+-- SPECIALTY data
+INSERT INTO SPECIALTY (specialty_name, specialty_notes) VALUES
+('Cardiology', 'Heart specialist'),
+('Pediatrics', 'Child health specialist'),
+('Emergency Medicine', 'Acute care specialist'),
+('Neurology', 'Nervous system specialist'),
+('Oncology', 'Cancer specialist'),
+('Orthopedics', 'Musculoskeletal specialist'),
+('Dermatology', 'Skin specialist'),
+('Radiology', 'Medical imaging specialist'),
+('Internal Medicine', 'Adult diseases specialist'),
+('General Surgery', 'Surgical procedures specialist');
+
+-- DOCTOR data
+INSERT INTO DOCTOR (doctor_id, first_name, last_name, phone_number, department_id, specialty_id) VALUES
+('200001', 'John', 'Doe', '987-654-3210', 1, 1),
+('200002', 'Jane', 'Brown', '876-543-2109', 2, 2),
+('200003', 'Michael', 'Johnson', '765-432-1098', 3, 3),
+('200004', 'Sarah', 'Davis', '654-321-0987', 4, 4),
+('200005', 'Robert', 'Miller', '543-210-9876', 5, 5),
+('200006', 'Emily', 'Wilson', '432-109-8765', 6, 6),
+('200007', 'Daniel', 'Moore', '321-098-7654', 7, 7),
+('200008', 'Jessica', 'Taylor', '210-987-6543', 8, 8),
+('200009', 'Christopher', 'Anderson', '109-876-5432', 9, 9),
+('200010', 'Ashley', 'Thomas', '098-765-4321', 10, 10),
+('200011', 'Matthew', 'Jackson', '987-654-3211', 11, 1),
+('200012', 'Jennifer', 'White', '876-543-2108', 12, 2),
+('200013', 'David', 'Harris', '765-432-1097', 13, 3),
+('200014', 'Lisa', 'Martin', '654-321-0986', 14, 4),
+('200015', 'James', 'Thompson', '543-210-9875', 15, 5);
+
+-- DOCTOR_SPECIALTY data
+INSERT INTO DOCTOR_SPECIALTY (doctor_id, specialty_id) VALUES
+(1, 1),
+(1, 3),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(5, 9),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10),
+(11, 1),
+(12, 2),
+(13, 3),
+(13, 10),
+(14, 4),
+(15, 5);
+
+-- NURSE data
+INSERT INTO NURSE (nurse_id, first_name, last_name, phone_number, department_id) VALUES
+('300001', 'Nina', 'Taylor', '555-000-1111', 1),
+('300002', 'Mike', 'Anderson', '555-000-2222', 2),
+('300003', 'Rachel', 'Johnson', '555-000-3333', 3),
+('300004', 'Eric', 'Williams', '555-000-4444', 4),
+('300005', 'Sophia', 'Martinez', '555-000-5555', 5),
+('300006', 'Thomas', 'Brown', '555-000-6666', 6),
+('300007', 'Olivia', 'Garcia', '555-000-7777', 7),
+('300008', 'William', 'Smith', '555-000-8888', 8),
+('300009', 'Emma', 'Davis', '555-000-9999', 9),
+('300010', 'Alexander', 'Wilson', '555-111-0000', 10),
+('300011', 'Mia', 'Thompson', '555-111-1111', 11),
+('300012', 'James', 'Lee', '555-111-2222', 12),
+('300013', 'Charlotte', 'Harris', '555-111-3333', 13),
+('300014', 'Benjamin', 'Clark', '555-111-4444', 14),
+('300015', 'Amelia', 'Lewis', '555-111-5555', 15);
+-- DOCTOR_NURSE data
+INSERT INTO DOCTOR_NURSE (doctor_id, nurse_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10),
+(11, 11),
+(12, 12),
+(13, 13),
+(14, 14),
+(15, 15),
+(1, 2),
+(2, 3),
+(3, 4);
+
+-- ROOM data
+INSERT INTO ROOM (room_name, room_type, department_id) VALUES
+('Room A1', 'ICU', 1),
+('Room B2', 'Pediatrics', 2),
+('Room C3', 'Emergency', 3),
+('Room D4', 'Neurology', 4),
+('Room E5', 'Oncology', 5),
+('Room F6', 'Orthopedics', 6),
+('Room G7', 'Dermatology', 7),
+('Room H8', 'Radiology', 8),
+('Room I9', 'Internal Medicine', 9),
+('Room J10', 'Surgery', 10),
+('Room K11', 'Obstetrics', 11),
+('Room L12', 'Psychiatry', 12),
+('Room M13', 'Urology', 13),
+('Room N14', 'Ophthalmology', 14),
+('Room O15', 'Endocrinology', 15);
+
+-- BED data
+INSERT INTO BED (bed_number, room_id, patient_id) VALUES
+('Bed 101', 1, 1),
+('Bed 102', 2, 2),
+('Bed 103', 3, 3),
+('Bed 104', 4, 4),
+('Bed 105', 5, 5),
+('Bed 106', 6, 6),
+('Bed 107', 7, 7),
+('Bed 108', 8, 8),
+('Bed 109', 9, 9),
+('Bed 110', 10, 10),
+('Bed 111', 11, NULL),
+('Bed 112', 12, NULL),
+('Bed 113', 13, NULL),
+('Bed 114', 14, NULL),
+('Bed 115', 15, NULL);
+
+-- INSURANCE data
+INSERT INTO INSURANCE (provider_name, plan_name, coverage_amount, coverage_type, start_date, end_date, contact_number, policy_number, copay_amount, deductible, pre_approval_required) VALUES
+('HealthFirst', 'Premium Plus', 1000000.00, 'Comprehensive', '2024-01-01', '2024-12-31', '800-111-2222', 'HF-PP-12345', 20.00, 1000.00, FALSE),
+('WellCare', 'Family Plan', 750000.00, 'Family', '2024-01-15', '2024-12-31', '800-222-3333', 'WC-FP-23456', 25.00, 1500.00, TRUE),
+('MediCorp', 'Standard Individual', 500000.00, 'Individual', '2024-02-01', '2025-01-31', '800-333-4444', 'MC-SI-34567', 30.00, 2000.00, FALSE),
+('InsurePlus', 'Bronze Coverage', 300000.00, 'Basic', '2024-03-01', '2024-12-31', '800-444-5555', 'IP-BC-45678', 35.00, 2500.00, FALSE),
+('HealthGuard', 'Silver Protection', 400000.00, 'Standard', '2024-01-01', '2024-12-31', '800-555-6666', 'HG-SP-56789', 30.00, 2000.00, TRUE),
+('MedAssure', 'Gold Plan', 800000.00, 'Premium', '2024-02-15', '2025-02-14', '800-666-7777', 'MA-GP-67890', 15.00, 1000.00, TRUE),
+('CareShield', 'Platinum Coverage', 1200000.00, 'Elite', '2024-01-01', '2024-12-31', '800-777-8888', 'CS-PC-78901', 10.00, 500.00, FALSE),
+('LifeHealth', 'Senior Care', 600000.00, 'Senior', '2024-03-15', '2025-03-14', '800-888-9999', 'LH-SC-89012', 15.00, 750.00, TRUE),
+('FamilyCare', 'Children First', 400000.00, 'Pediatric', '2024-01-01', '2024-12-31', '800-999-0000', 'FC-CF-90123', 0.00, 0.00, FALSE),
+('MedicalPlus', 'Worker Protection', 500000.00, 'Occupational', '2024-02-01', '2025-01-31', '800-000-1111', 'MP-WP-01234', 25.00, 1500.00, TRUE);
+
+-- PATIENT_INSURANCE data
+INSERT INTO PATIENT_INSURANCE (patient_id, insurance_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10),
+(11, 1),
+(12, 2),
+(13, 3),
+(14, 4),
+(15, 5);
+
+-- BILL data
+INSERT INTO BILL (patient_id, insurance_id, amount_owed, total_bill) VALUES
+(1, 1, 200.00, 1000.00),
+(2, 2, 150.00, 750.00),
+(3, 3, 300.00, 1500.00),
+(4, 4, 250.00, 1250.00),
+(5, 5, 100.00, 500.00),
+(6, 6, 400.00, 2000.00),
+(7, 7, 50.00, 250.00),
+(8, 8, 150.00, 750.00),
+(9, 9, 0.00, 800.00),
+(10, 10, 300.00, 1500.00),
+(11, 1, 100.00, 500.00),
+(12, 2, 200.00, 1000.00),
+(13, 3, 150.00, 750.00),
+(14, 4, 250.00, 1250.00),
+(15, 5, 300.00, 1500.00);
+
+-- PAYMENT data
+INSERT INTO PAYMENT (bill_id, payment_date, payment_method, payment_amount) VALUES
+(1, '2025-01-15', 'Credit Card', 800.00),
+(2, '2025-01-20', 'Insurance', 600.00),
+(3, '2025-02-01', 'Credit Card', 1200.00),
+(4, '2025-02-10', 'Insurance', 1000.00),
+(5, '2025-01-25', 'Cash', 400.00),
+(6, '2025-03-05', 'Insurance', 1600.00),
+(7, '2025-02-15', 'Credit Card', 200.00),
+(8, '2025-03-10', 'Insurance', 600.00),
+(9, '2025-01-30', 'Insurance', 800.00),
+(10, '2025-02-20', 'Cash', 1200.00),
+(1, '2025-03-15', 'out_of_pocket', 600.00),
+(2, '2025-02-25', 'out_of_pocket', 550.00),
+(3, '2025-03-20', 'out_of_pocket', 300.00),
+(4, '2025-01-10', 'out_of_pocket', 250.00),
+(5, '2025-02-05', 'out_of_pocket', 100.00);
+
+-- MEDICATION data
+INSERT INTO MEDICATION (medication_id, medication_name, medication_type, manufacturer, inventory_id) VALUES
+('750001', 'Amoxicillin', 'Antibiotic', 'PharmaCorp', 3),
+('750002', 'Lisinopril', 'Antihypertensive', 'PharmaCorp', 4),
+('750003', 'Atorvastatin', 'Statin', 'MedTech Pharma', 3),
+('750004', 'Metformin', 'Antidiabetic', 'Healthcare Pharma', 3),
+('750005', 'Levothyroxine', 'Hormone', 'BioMed Pharma', 3),
+('750006', 'Albuterol', 'Bronchodilator', 'Respiratory Care', 3),
+('750007', 'Hydrochlorothiazide', 'Diuretic', 'PharmaCorp', 4),
+('750008', 'Simvastatin', 'Statin', 'MedTech Pharma', 3),
+('750009', 'Omeprazole', 'Proton Pump Inhibitor', 'Digestive Health Inc', 3),
+('750010', 'Acetaminophen', 'Analgesic', 'Pain Relief Co', 3),
+('750011', 'Ibuprofen', 'NSAID', 'Pain Relief Co', 3),
+('750012', 'Aspirin', 'Antiplatelet', 'CardioHealth', 3),
+('750013', 'Azithromycin', 'Antibiotic', 'PharmaCorp', 3),
+('750014', 'Fluoxetine', 'Antidepressant', 'Mental Health Pharma', 3),
+('750015', 'Sertraline', 'Antidepressant', 'Mental Health Pharma', 3),
+('750016', 'Ciprofloxacin', 'Antibiotic', 'PharmaCorp', 21),
+('750017', 'Prednisone', 'Corticosteroid', 'Health Solutions', 22),
+('750018', 'Losartan', 'Antihypertensive', 'CardioHealth', 23),
+('750019', 'Amlodipine', 'Calcium Channel Blocker', 'PharmaCorp', 24),
+('750020', 'Duloxetine', 'Antidepressant', 'Mental Health Pharma', 25);
+
+
+-- PRESCRIPTION data
+INSERT INTO PRESCRIPTION (patient_id, medication_id, doctor_id, dosage, dosage_unit, frequency, start_date, end_date, refill_total, refills_used, refill_date, refills_allowed) VALUES
+(1, 2, 1, 10, 'mg', 'Daily', '2025-01-10', '2025-07-10', 6, 1, '2025-02-10', TRUE),
+(1, 12, 1, 81, 'mg', 'Daily', '2025-01-10', '2025-07-10', 6, 1, '2025-02-10', TRUE),
+(2, 4, 2, 500, 'mg', 'Twice daily', '2025-01-15', '2025-07-15', 6, 1, '2025-02-15', TRUE),
+(3, 6, 3, 90, 'mcg', 'As needed', '2025-01-20', '2025-04-20', 3, 0, '2025-02-20', TRUE),
+(4, 11, 4, 600, 'mg', 'Three times daily', '2025-01-25', '2025-02-25', 1, 0, '2025-02-25', FALSE),
+(5, 9, 5, 20, 'mg', 'Daily', '2025-02-01', '2025-08-01', 6, 1, '2025-03-01', TRUE),
+(6, 14, 6, 20, 'mg', 'Daily', '2025-02-05', '2025-08-05', 6, 1, '2025-03-05', TRUE),
+(7, 15, 7, 50, 'mg', 'Daily', '2025-02-10', '2025-08-10', 6, 1, '2025-03-10', TRUE),
+(8, 5, 8, 125, 'mcg', 'Daily', '2025-02-15', '2025-08-15', 6, 1, '2025-03-15', TRUE),
+(9, 10, 9, 500, 'mg', 'As needed', '2025-02-20', '2025-03-20', 1, 0, '2025-03-20', FALSE),
+(10, 1, 10, 500, 'mg', 'Three times daily', '2025-02-25', '2025-03-25', 1, 0, '2025-03-25', FALSE),
+(11, 3, 11, 20, 'mg', 'Daily', '2025-03-01', '2025-09-01', 6, 0, '2025-04-01', TRUE),
+(12, 7, 12, 25, 'mg', 'Daily', '2025-03-05', '2025-09-05', 6, 0, '2025-04-05', TRUE),
+(13, 8, 13, 20, 'mg', 'Daily', '2025-03-10', '2025-09-10', 6, 0, '2025-04-10', TRUE),
+(14, 13, 14, 250, 'mg', 'Daily', '2025-03-15', '2025-03-22', 1, 0, '2025-03-22', FALSE),
+(15, 7, 15, 12.5, 'mg', 'Daily', '2025-03-20', '2025-09-20', 6, 0, '2025-04-20', TRUE),
+('550001', '100001', '750002', '200001', 10, 'mg', 'Daily', '2025-01-10', '2025-07-10', 6, 1, '2025-02-10', TRUE),
+('550002', '100001', '750012', '200001', 81, 'mg', 'Daily', '2025-01-10', '2025-07-10', 6, 1, '2025-02-10', TRUE),
+('550003', '100002', '750004', '200002', 500, 'mg', 'Twice daily', '2025-01-15', '2025-07-15', 6, 1, '2025-02-15', TRUE),
+('550004', '100003', '750006', '200003', 90, 'mcg', 'As needed', '2025-01-20', '2025-04-20', 3, 0, '2025-02-20', TRUE),
+('550005', '100004', '750011', '200004', 600, 'mg', 'Three times daily', '2025-01-25', '2025-02-25', 1, 0, '2025-02-25', FALSE),
+('550006', '100005', '750009', '200005', 20, 'mg', 'Daily', '2025-02-01', '2025-08-01', 6, 1, '2025-03-01', TRUE),
+('550007', '100006', '750014', '200006', 20, 'mg', 'Daily', '2025-02-05', '2025-08-05', 6, 1, '2025-03-05', TRUE),
+('550008', '100007', '750015', '200007', 50, 'mg', 'Daily', '2025-02-10', '2025-08-10', 6, 1, '2025-03-10', TRUE),
+('550009', '100008', '750005', '200008', 125, 'mcg', 'Daily', '2025-02-15', '2025-08-15', 6, 1, '2025-03-15', TRUE),
+('550010', '100009', '750010', '200009', 500, 'mg', 'As needed', '2025-02-20', '2025-03-20', 1, 0, '2025-03-20', FALSE),
+('550011', '100010', '750001', '200010', 500, 'mg', 'Three times daily', '2025-02-25', '2025-03-25', 1, 0, '2025-03-25', FALSE),
+('550012', '100011', '750003', '200011', 20, 'mg', 'Daily', '2025-03-01', '2025-09-01', 6, 0, '2025-04-01', TRUE),
+('550013', '100012', '750007', '200012', 25, 'mg', 'Daily', '2025-03-05', '2025-09-05', 6, 0, '2025-04-05', TRUE),
+('550014', '100013', '750008', '200013', 20, 'mg', 'Daily', '2025-03-10', '2025-09-10', 6, 0, '2025-04-10', TRUE),
+('550015', '100014', '750013', '200014', 250, 'mg', 'Daily', '2025-03-15', '2025-03-22', 1, 0, '2025-03-22', FALSE),
+('550016', '100015', '750007', '200015', 12.5, 'mg', 'Daily', '2025-03-20', '2025-09-20', 6, 0, '2025-04-20', TRUE);
+-- SURGERY data
 INSERT INTO SURGERY (surgery_id, patient_id, doctor_id, bed_id, surgery_date, surgery_type, surgery_status, start_time, end_time) VALUES
-('900001', '100001', '200001', '3001', '2025-01-15 08:00:00', 'Coronary Artery Bypass', 'completed', '2025-01-15 08:00:00', '2025-01-15 12:00:00'),
+('900001', '100001', '200001', 1, '2025-01-15 08:00:00', 'Coronary Artery Bypass', 'completed', '2025-01-15 08:00:00', '2025-01-15 12:00:00'),
 ('900002', '100002', '200010', 2, '2025-01-20 09:00:00', 'Appendectomy', 'completed', '2025-01-20 09:00:00', '2025-01-20 11:00:00'),
 ('900003', '100003', '200010', 3, '2025-01-25 10:00:00', 'Hernia Repair', 'completed', '2025-01-25 10:00:00', '2025-01-25 12:30:00'),
 ('900004', '100004', '200006', 4, '2025-02-01 07:30:00', 'Knee Replacement', 'completed', '2025-02-01 07:30:00', '2025-02-01 10:30:00'),
