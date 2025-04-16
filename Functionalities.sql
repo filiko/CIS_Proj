@@ -4,25 +4,35 @@
 -- 1. Patient-Doctor Relationship
 -- ● Question: List all patients who have had appointments with more than one doctor in the past month.
 -- Show patient's name, doctor names, and the number of appointments
--- No Data Appears 
-SELECT 
+
+-- Functionality Requirement #1 --
+-- Fully Functional -- 
+
+SELECT
     p.first_name AS patient_first_name,
     p.last_name AS patient_last_name,
-    GROUP_CONCAT(DISTINCT CONCAT(d.first_name, ' ', d.last_name) SEPARATOR ', ') AS doctor_names,
-    COUNT(a.appointment_id) AS total_appointments
-FROM 
-    PATIENT p
-JOIN 
-    APPOINTMENT a ON p.patient_id = a.patient_id
-JOIN 
-    DOCTOR d ON a.doctor_id = d.doctor_id
-WHERE 
-    a.appointment_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)
-    AND a.appointment_status = 'completed'
-GROUP BY 
-    p.patient_id
-HAVING 
-    COUNT(DISTINCT a.doctor_id) > 1;
+    d.first_name AS doctor_first_name,
+    d.last_name AS doctor_last_name,
+    COUNT(a.appointment_id) AS appointment_count
+FROM
+    APPOINTMENT a
+JOIN PATIENT p ON a.patient_id = p.patient_id
+JOIN DOCTOR d ON a.doctor_id = d.doctor_id
+WHERE
+    a.appointment_date >= CURDATE() - INTERVAL 1 MONTH
+GROUP BY
+    p.patient_id, d.doctor_id
+HAVING
+    p.patient_id IN (
+        SELECT patient_id
+        FROM APPOINTMENT
+        WHERE appointment_date >= CURDATE() - INTERVAL 1 MONTH
+        GROUP BY patient_id
+        HAVING COUNT(DISTINCT doctor_id) > 1
+    )
+ORDER BY
+    p.last_name, p.first_name, appointment_count DESC;
+
 
 -- 2. Equipment Utilization
 -- ● Question: Identify the equipment that has been used in more than five surgeries this year.
