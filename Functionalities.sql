@@ -56,7 +56,7 @@ HAVING
 
 -- 3. Insurance Coverage
 -- Question: Find all patients who have an insurance policy but have made out-of-pocket payments exceeding $500 in the last year.
--- Likely Functional
+-- FUNCTIONAL !CHANGE
 SELECT 
     p.first_name,
     p.last_name,
@@ -84,7 +84,7 @@ HAVING
 -- 4. Telehealth Analysis
 -- List doctors with more than 10 telehealth sessions but less than 4-star average in patient feedback
 -- Currently Functional
--- Check / Add more sample data
+-- Check Data - / Add more sample data bc only 1 case rn
 
 SELECT 
     d.first_name,
@@ -108,19 +108,36 @@ HAVING
 -- No Data
 -- NEED TO FINISH
 
+-- Identify medications with less than 10 units in inventory not in pending orders
 SELECT 
     m.medication_name,
-    i.amount_in_inventory AS current_stock
+    COALESCE(moi_total.total_quantity, 0) AS current_stock
 FROM 
     MEDICATION m
-JOIN 
-    INVENTORY i ON m.inventory_id = i.item_id
-LEFT JOIN 
-    (SELECT DISTINCT medication_id FROM PRESCRIPTION WHERE refills_allowed = TRUE) p 
-    ON m.medication_id = p.medication_id
+LEFT JOIN (
+    -- Get the total quantity for each medication across all order items
+    SELECT 
+        medication_id,
+        SUM(med_quantity) AS total_quantity
+    FROM 
+        MEDICATION_ORDER_ITEM
+    GROUP BY 
+        medication_id
+) moi_total ON m.medication_id = moi_total.medication_id
+LEFT JOIN (
+    -- Check if the medication is in any pending orders
+    SELECT DISTINCT
+        moi.medication_id
+    FROM 
+        MEDICATION_ORDER_ITEM moi
+    JOIN 
+        MEDICATION_ORDER mo ON moi.med_order_id = mo.med_order_id
+    WHERE 
+        mo.order_status = 'pending'
+) pending_orders ON m.medication_id = pending_orders.medication_id
 WHERE 
-    i.amount_in_inventory < 10
-    AND p.medication_id IS NULL;
+    (COALESCE(moi_total.total_quantity, 0) < 10)
+    AND pending_orders.medication_id IS NULL;
 
 -- 6. Multi-Branch Doctors
 -- List doctors who worked in more than one hospital branch in past six months with branch names
@@ -235,7 +252,7 @@ HAVING SUM(NURSE_WORKLOG.hours) >= 40;  -- includes only nurses who worked 40 or
 -- 10. Lab Test Specialization
 -- Identify lab technicians who have performed more than 10 specialized lab tests (e.g., MRI, blood culture) in the past month.
 -- Likely Functional
--- Fix Data: More case examples
+-- Fix Data: More case examples - only 1 right now
 SELECT 
     lt.technician_id,
     lt.first_name,
@@ -280,8 +297,7 @@ WHERE
 -- 12. Patient Visit Frequency
 -- Identify all patients who have visited the hospital more than five times in the past six months.
 -- Show the patient's name, the number of visits, and the department most frequently visited.
--- FIX
--- No Data 
+-- FUNCTIONAL !EDIT
 SELECT 
     p.first_name,
     p.last_name,

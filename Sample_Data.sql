@@ -619,3 +619,31 @@ INSERT INTO APPOINTMENT (appointment_id, patient_id, doctor_id, nurse_id, depart
 ('950020', '100001', '200008', '300008', 8, DATE_SUB(CURRENT_DATE(), INTERVAL 155 DAY), 'Imaging follow-up', 'completed', 'Imaging shows improvement', 'No further imaging needed'),
 ('950021', '100001', '200009', '300009', 9, DATE_SUB(CURRENT_DATE(), INTERVAL 154 DAY), 'Routine physical', 'completed', 'Overall health good', 'All vitals normal'),
 ('950022', '100001', '200010', '300010', 10, DATE_SUB(CURRENT_DATE(), INTERVAL 153 DAY), 'Pre-surgical clearance', 'completed', 'Cleared for surgery', 'All pre-op tests completed');
+
+
+
+
+
+
+
+
+
+
+-- First, check what's already in the table
+SELECT * FROM MEDICATION_ORDER;
+SELECT * FROM MEDICATION_ORDER_ITEM;
+SELECT * FROM MEDICATION;
+
+-- First create medication orders
+INSERT INTO MEDICATION_ORDER (med_order_id, supplier_id, order_date, expected_delivery, order_status) VALUES
+(1, 1, DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY), DATE_SUB(CURRENT_DATE, INTERVAL 25 DAY), 'delivered'),
+(2, 1, DATE_SUB(CURRENT_DATE, INTERVAL 20 DAY), DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY), 'delivered'),
+(3, 2, DATE_SUB(CURRENT_DATE, INTERVAL 10 DAY), DATE_SUB(CURRENT_DATE, INTERVAL 5 DAY), 'delivered'),
+(4, 2, DATE_SUB(CURRENT_DATE, INTERVAL 5 DAY), DATE_ADD(CURRENT_DATE, INTERVAL 2 DAY), 'shipped'),
+(5, 3, CURRENT_DATE, DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY), 'pending'),
+(6, 3, CURRENT_DATE, DATE_ADD(CURRENT_DATE, INTERVAL 10 DAY), 'pending');
+
+
+
+
+
